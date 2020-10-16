@@ -1,4 +1,5 @@
 from time import sleep, perf_counter
+from threading import Thread
 
 start = perf_counter()
 
@@ -6,11 +7,18 @@ start = perf_counter()
 def show(name):
     print(f'starting {name}')
     sleep(3)
-    print(f'finishing {name}')
+    print(f'finishing {name} \n')
 
 
-show('one')
-show('two')
+t1 = Thread(target=show,args=('one',))
+t2 = Thread(target=show,args=('two',))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
 
 end = perf_counter()
 print(f'total time = {round(end - start)}')
